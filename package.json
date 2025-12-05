@@ -1,0 +1,45 @@
+{
+  "name": "cotacao-cafe",
+  "version": "1.0.0",
+  "description": "Biblioteca para buscar a cotação do café da Cooabriel",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "coverage": "vitest run --coverage",
+    "format": "prettier --write .",
+    "lint": "eslint src/**/*.ts",
+    "lint:fix": "eslint src/**/*.ts --fix",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "pnpm run build"
+  },
+  "keywords": [
+    "coffee",
+    "cotação",
+    "cooabriel",
+    "preço",
+    "café"
+  ],
+  "author": "Fernando Gatti",
+  "contributors": [
+    {
+      "name": "Fernando Gatti",
+      "github": "https://github.com/gattifernando",
+      "linkedin": "https://www.linkedin.com/in/gattifernando/"
+    }
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.19.25",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "eslint": "^8.57.1",
+    "prettier": "^3.7.4",
+    "typescript": "^5.9.3",
+    "vitest": "^1.6.1"
+  },
+  "packageManager": "pnpm@10.23.0"
+}
