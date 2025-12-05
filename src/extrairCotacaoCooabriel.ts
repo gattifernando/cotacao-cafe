@@ -4,26 +4,21 @@ import type { CotacaoCafe } from './index.js';
 export function extrairCotacaoCooabriel(html: string): CotacaoCafe[] {
   const $ = cheerio.load(html);
 
-  // Encontrar a primeira tabela que tenha cabeçalho com "Tipo" e "Preço"
-  const tabela = $('table')
+  // Buscar QUALQUER tabela com 4 colunas no thead
+  const tabela = $('table:has(thead tr th)')
     .filter((_, el) => {
-      const cabecalho = $(el)
-        .find('thead tr th')
-        .map((__, th) => $(th).text().trim().toLowerCase())
-        .get();
-      return (
-        cabecalho.includes('tipo') && cabecalho.some((t) => t.includes('preço'))
-      );
+      const cabecalhos = $(el).find('thead tr th').length;
+      return cabecalhos >= 4; // Tabela com pelo menos 4 colunas
     })
     .first();
 
-  if (!tabela || tabela.length === 0) {
+  if (tabela.length === 0) {
     throw new Error(
       'Não foi possível encontrar a tabela de cotação do café na página da Cooabriel.'
     );
   }
 
-  const linhas = tabela.find('tbody tr');
+  const linhas = tabela.find('tbody tr, tr:not(thead tr)');
   const cotacoes: CotacaoCafe[] = [];
 
   linhas.each((_, tr) => {
@@ -32,27 +27,30 @@ export function extrairCotacaoCooabriel(html: string): CotacaoCafe[] {
       .map((__, td) => $(td).text().trim())
       .get();
 
-    if (colunas.length < 4) {
-      return;
-    }
+    if (colunas.length >= 4) {
+      const [tipo, data, hora, precoTexto] = colunas;
 
-    const [tipo, data, hora, precoTexto] = colunas;
+      // Normalizar preço: R$ 1.360,00 -> 1360.00
+      const precoNormalizado = precoTexto
+        .replace(/[^\d,]/g, '') // remove tudo exceto números e vírgula
+        .replace(',', '.'); // vírgula -> ponto
 
-    const precoNormalizado = precoTexto
-      .replace(/\./g, '') // remove separador de milhar
-      .replace(',', '.'); // converte vírgula decimal em ponto
+      const preco = Number.parseFloat(precoNormalizado);
 
-    const preco = Number.parseFloat(precoNormalizado);
-
-    if (!Number.isNaN(preco)) {
-      cotacoes.push({
-        tipo,
-        data,
-        hora,
-        preco,
-      });
+      if (!Number.isNaN(preco) && preco > 0) {
+        cotacoes.push({
+          tipo: tipo || 'Desconhecido',
+          data: data || '',
+          hora: hora || '',
+          preco,
+        });
+      }
     }
   });
+
+  if (cotacoes.length === 0) {
+    throw new Error('Tabela encontrada, mas sem linhas de cotação válidas.');
+  }
 
   return cotacoes;
 }
