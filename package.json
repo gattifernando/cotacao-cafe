@@ -49,6 +49,17 @@
         }
       ],
       "@semantic-release/npm",
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "package.json",
+            "pnpm-lock.yaml",
+            "CHANGELOG.md"
+          ],
+          "message": "chore(release): ${nextRelease.version}"
+        }
+      ],
       "@semantic-release/github"
     ]
   },
@@ -58,6 +69,7 @@
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/commit-analyzer": "^13.0.1",
     "@semantic-release/exec": "^7.1.0",
+    "@semantic-release/git": "^10.0.1",
     "@semantic-release/github": "^12.0.2",
     "@semantic-release/npm": "^13.1.2",
     "@semantic-release/release-notes-generator": "^14.1.0",
