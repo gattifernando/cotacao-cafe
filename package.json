@@ -4,6 +4,9 @@
   "description": "Biblioteca para buscar a cotação do café da Cooabriel",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "tsx src/dev.ts",
     "build": "tsc",
