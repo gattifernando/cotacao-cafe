@@ -1,6 +1,6 @@
 {
   "name": "cotacao-cafe",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "Biblioteca para buscar a cotação do café da Cooabriel",
   "type": "module",
   "main": "dist/index.js",
