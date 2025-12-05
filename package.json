@@ -1,5 +1,5 @@
 {
-  "name": "@fernandogatti/cotacao-cafe",
+  "name": "cotacao-cafe",
   "version": "1.0.0",
   "description": "Biblioteca para buscar a cotação do café da Cooabriel",
   "type": "module",
