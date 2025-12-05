@@ -2,7 +2,7 @@
 
 ## Status
 
-in-progress
+done
 
 ## Type
 
@@ -18,9 +18,9 @@ Criar funções, tipos e funcionalidade completa da função do scraper. Foco na
 
 ## Tasks
 
-- [ ] Task 1
-- [ ] Task 2
-- [ ] Task 3
+- [x] Implementar principais métodos
+- [x] Implementar Testes
+- [x] Ajusta README da biblioteca
 
 ## Notes
 
