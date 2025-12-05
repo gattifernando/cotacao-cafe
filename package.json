@@ -2,19 +2,21 @@
   "name": "cotacao-cafe",
   "version": "1.0.0",
   "description": "Biblioteca para buscar a cotação do café da Cooabriel",
+  "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
+    "dev": "tsx src/dev.ts",
     "build": "tsc",
-    "dev": "tsc --watch",
     "test": "vitest run",
-    "test:watch": "vitest",
-    "coverage": "vitest run --coverage",
-    "format": "prettier --write .",
-    "lint": "eslint src/**/*.ts",
-    "lint:fix": "eslint src/**/*.ts --fix",
-    "typecheck": "tsc --noEmit",
-    "prepublishOnly": "pnpm run build"
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [
     "coffee",
@@ -31,15 +33,38 @@
       "linkedin": "https://www.linkedin.com/in/gattifernando/"
     }
   ],
+  "release": {
+    "branches": [
+      "main"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/changelog",
+      "@semantic-release/npm",
+      "@semantic-release/github"
+    ]
+  },
   "license": "MIT",
   "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@semantic-release/github": "^12.0.2",
+    "@semantic-release/npm": "^13.1.2",
     "@types/node": "^20.19.25",
-    "@typescript-eslint/eslint-plugin": "^6.21.0",
-    "@typescript-eslint/parser": "^6.21.0",
-    "eslint": "^8.57.1",
+    "@typescript-eslint/eslint-plugin": "^8.48.1",
+    "@typescript-eslint/parser": "^8.48.1",
+    "eslint": "^9.39.1",
     "prettier": "^3.7.4",
+    "semantic-release": "^25.0.2",
+    "taskin": "^1.0.11",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vitest": "^1.6.1"
+  },
+  "dependencies": {
+    "axios": "^1.13.2",
+    "cheerio": "^1.1.2",
+    "undici": "^7.16.0"
   },
   "packageManager": "pnpm@10.23.0"
 }
