@@ -1,6 +1,6 @@
 {
-  "name": "@gattifernando/cotacao-cafe",
-  "version": "1.0.0",
+  "name": "cotacao-cafe",
+  "version": "1.2.0",
   "description": "Biblioteca para buscar a cotação do café da Cooabriel",
   "type": "module",
   "main": "dist/index.js",
@@ -42,7 +42,24 @@
       "@semantic-release/commit-analyzer",
       "@semantic-release/release-notes-generator",
       "@semantic-release/changelog",
+      [
+        "@semantic-release/exec",
+        {
+          "prepareCmd": "pnpm build"
+        }
+      ],
       "@semantic-release/npm",
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "package.json",
+            "pnpm-lock.yaml",
+            "CHANGELOG.md"
+          ],
+          "message": "chore(release): ${nextRelease.version}"
+        }
+      ],
       "@semantic-release/github"
     ]
   },
@@ -51,6 +68,8 @@
     "@eslint/js": "^9.39.1",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/commit-analyzer": "^13.0.1",
+    "@semantic-release/exec": "^7.1.0",
+    "@semantic-release/git": "^10.0.1",
     "@semantic-release/github": "^12.0.2",
     "@semantic-release/npm": "^13.1.2",
     "@semantic-release/release-notes-generator": "^14.1.0",
@@ -70,5 +89,8 @@
     "cheerio": "^1.1.2",
     "undici": "^7.16.0"
   },
-  "packageManager": "pnpm@10.23.0"
+  "packageManager": "pnpm@10.23.0",
+  "publishConfig": {
+    "access": "public"
+  }
 }
