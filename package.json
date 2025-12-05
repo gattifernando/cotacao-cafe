@@ -10,13 +10,14 @@
   ],
   "scripts": {
     "dev": "tsx src/dev.ts",
-    "build": "tsc",
-    "test": "vitest run",
+    "build": "tsc -p tsconfig.build.json",
+    "test": "vitest",
+    "test:build": "pnpm build && vitest",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --check .",
-    "format:fix": "prettier --write .",
-    "typecheck": "tsc --noEmit"
+    "format:fix": "prettier --write ."
   },
   "keywords": [
     "coffee",
