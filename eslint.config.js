@@ -1,28 +1,30 @@
-// eslint.config.js
-import ts from '@typescript-eslint/eslint-plugin';
+import js from '@eslint/js';
+import typescriptEslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 
 export default [
-  // Ignora pastas irrelevantes
   {
-    ignores: ['dist/**', 'node_modules/**'],
+    ignores: ['dist/**', 'node_modules/**', '*.js'],
   },
-  // Configuração para arquivos TypeScript e JavaScript
+  js.configs.recommended,
   {
-    files: ['**/*.ts', '**/*.js'],
+    files: ['**/*.ts'],
     languageOptions: {
+      globals: {
+        fetch: 'readonly',
+      },
       parser: tsParser,
-      sourceType: 'module',
+      parserOptions: {
+        project: './tsconfig.json',
+      },
     },
     plugins: {
-      '@typescript-eslint': ts,
+      '@typescript-eslint': typescriptEslint,
     },
     rules: {
-      '@typescript-eslint/no-unused-vars': [
-        'error',
-        { argsIgnorePattern: '^_' },
-      ],
-      'no-console': ['warn', { allow: ['warn', 'error'] }],
+      ...typescriptEslint.configs.recommended.rules,
+      '@typescript-eslint/no-unused-vars': 'error',
+      'no-console': 'warn',
     },
   },
 ];
