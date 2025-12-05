@@ -2,7 +2,7 @@
 
 ## Status
 
-in-progress
+done
 
 ## Type
 
@@ -18,9 +18,9 @@ Configurar publicação no NPM a partir do main e versionamento com semantic-rel
 
 ## Tasks
 
-- [ ] Configurar Semantic Release
-- [ ] Configurar GitHub Actions
-- [ ] Configurar NPM
+- [x] Configurar Semantic Release
+- [x] Configurar GitHub Actions
+- [x] Configurar NPM
 
 ## Notes
 
