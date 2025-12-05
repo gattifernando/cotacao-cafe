@@ -8,14 +8,21 @@ export default [
   },
   js.configs.recommended,
   {
+    files: ['src/dev.ts'],
+    rules: {
+      'no-console': 'off',
+    },
+  },
+  {
     files: ['**/*.ts'],
     languageOptions: {
-      globals: {
-        fetch: 'readonly',
-      },
       parser: tsParser,
       parserOptions: {
         project: './tsconfig.json',
+      },
+      globals: {
+        fetch: 'readonly',
+        console: 'readonly',
       },
     },
     plugins: {
