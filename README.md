@@ -8,18 +8,18 @@
 
 ## 🚀 Instalação
 
-```
+```bash
 pnpm add cotacao-cafe
 ```
 
 ## 📖 Uso
 
-```
-import { buscarCotacaoCooabriel } from "cotacao-cafe";
+```typescript
+import { buscarCotacaoCooabriel } from 'cotacao-cafe';
 
 async function main() {
-const cotacoes = await buscarCotacaoCooabriel();
-console.table(cotacoes);
+  const cotacoes = await buscarCotacaoCooabriel();
+  console.table(cotacoes);
 }
 
 main();
@@ -39,12 +39,12 @@ main();
 
 ## 🧩 Tipos
 
-```
+```typescript
 type CotacaoCafe = {
-tipo: string; // "Conilon 7", "Conilon 7/8", etc.
-data: string; // "dd/mm/aaaa"
-hora: string; // "hh:mm"
-preco: number; // valor em reais (1360.0)
+  tipo: string; // "Conilon 7", "Conilon 7/8", etc.
+  data: string; // "dd/mm/aaaa"
+  hora: string; // "hh:mm"
+  preco: number; // valor em reais (1360.0)
 };
 ```
 
@@ -64,11 +64,13 @@ preco: number; // valor em reais (1360.0)
 
 ## 🛠️ Desenvolvimento
 
+```bash
 git clone https://github.com/gattifernando/cotacao-cafe
 cd cotacao-cafe
 pnpm install
-pnpm dev # testa contra site real
-pnpm test # testes unitários
+pnpm dev   # testa contra site real
+pnpm test  # testes unitários
+```
 
 ## 📄 Licença
 
