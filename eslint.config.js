@@ -8,7 +8,7 @@ export default [
   },
   js.configs.recommended,
   {
-    files: ['src/dev.ts'],
+    files: ['src/dev.ts', 'src/cli.ts'],
     rules: {
       'no-console': 'off',
     },
@@ -23,6 +23,7 @@ export default [
       globals: {
         fetch: 'readonly',
         console: 'readonly',
+        process: 'readonly',
       },
     },
     plugins: {

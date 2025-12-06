@@ -1,8 +1,10 @@
 # Cotação do Café - Cooabriel
 
-[![pnpm](https://img.shields.io/badge/pnpm-%3E=10.23.0-brightgreen.svg)](https://pnpm.io)
+[![CI](https://github.com/gattifernando/cotacao-cafe/actions/workflows/ci.yml/badge.svg)](https://github.com/gattifernando/cotacao-cafe/actions/workflows/ci.yml)
+[![npm version](https://img.shields.io/npm/v/cotacao-cafe.svg)](https://www.npmjs.com/package/cotacao-cafe)
+[![npm downloads](https://img.shields.io/npm/dm/cotacao-cafe.svg)](https://www.npmjs.com/package/cotacao-cafe)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue.svg)](https://typescriptlang.org)
-[![Tests](https://img.shields.io/badge/tests-100%25-brightgreen.svg)](https://vitest.dev)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 **Busca programaticamente a cotação diária do café Conilon da Cooabriel.**
 
@@ -10,6 +12,21 @@
 
 ```bash
 pnpm add cotacao-cafe
+```
+
+## 🖥️ CLI
+
+Execute direto no terminal após instalação global:
+
+```bash
+npx cotacao-cafe
+```
+
+Ou instale globalmente:
+
+```bash
+npm install -g cotacao-cafe
+cotacao-cafe
 ```
 
 ## 📖 Uso
@@ -110,10 +127,60 @@ type CotacaoCafe = {
 git clone https://github.com/gattifernando/cotacao-cafe
 cd cotacao-cafe
 pnpm install
-pnpm dev   # testa contra site real
-pnpm test  # testes unitários
+pnpm dev              # testa contra site real
+pnpm test             # testes unitários (com fixtures)
+pnpm test:integration # testes de integração (requisições reais)
+pnpm test:all         # todos os testes
 ```
+
+### Scripts Disponíveis
+
+- `pnpm dev` - Executa script de desenvolvimento com dados reais
+- `pnpm cli` - Testa CLI localmente
+- `pnpm build` - Compila TypeScript
+- `pnpm test` - Testes unitários (offline, com fixtures)
+- `pnpm test:integration` - Testes de integração (online, contra site real)
+- `pnpm test:all` - Todos os testes (unitários + integração)
+- `pnpm test:dev` - Testes em modo watch
+- `pnpm typecheck` - Verificação de tipos
+- `pnpm lint` - ESLint
+- `pnpm format` - Prettier
+
+## 🧪 Testes
+
+O projeto possui dois tipos de testes:
+
+### Testes Unitários (offline)
+
+- Usam fixtures HTML salvos
+- Rápidos e confiáveis
+- Não dependem do site estar no ar
+- Executam no CI a cada commit
+
+### Testes de Integração (online)
+
+- Fazem requisições reais ao site
+- Validam se o scraping ainda funciona
+- Detectam mudanças na estrutura do site
+- Execute manualmente: `pnpm test:integration`
+- **Executam automaticamente todos os dias às 9h** via GitHub Actions
+- Criam uma issue automaticamente se detectarem falha
+
+## ⚠️ Limitações
+
+Contribuições são bem-vindas! Veja [CONTRIBUTING.md](CONTRIBUTING.md) para detalhes.
+
+1. Fork o projeto
+2. Crie uma branch para sua feature (`git checkout -b feat/nova-feature`)
+3. Commit suas mudanças usando [Conventional Commits](https://www.conventionalcommits.org/)
+4. Push para a branch (`git push origin feat/nova-feature`)
+5. Abra um Pull Request
 
 ## 📄 Licença
 
-MIT
+MIT - veja [LICENSE](LICENSE) para detalhes.
+
+## 📧 Contato
+
+- Fernando Gatti - [GitHub](https://github.com/gattifernando) - [LinkedIn](https://www.linkedin.com/in/gattifernando/)
+- Repositório: [github.com/gattifernando/cotacao-cafe](https://github.com/gattifernando/cotacao-cafe)
