@@ -25,14 +25,26 @@ jobs:
       # DEPOIS Node.js
       - uses: actions/setup-node@v4
         with:
-          node-version: 24.10.0
+          node-version: 20
           cache: pnpm
 
-      - run: pnpm --version
-      - run: pnpm install --frozen-lockfile
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
-      - run: pnpm build
-      - run: pnpm test
+      - name: Run linter
+        run: pnpm lint
+
+      - name: Run type check
+        run: pnpm typecheck
+
+      - name: Run tests
+        run: pnpm test
+
+      - name: Build
+        run: pnpm build
+
+      - name: Test package
+        run: pnpm test:package
 
       - name: Semantic Release
         run: npx semantic-release
