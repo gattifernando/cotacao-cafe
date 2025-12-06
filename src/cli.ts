@@ -174,28 +174,47 @@ async function main() {
 
         console.log(chalk.green(grafico));
 
-        // Adiciona linha com as datas no eixo X (início, meio, fim)
+        // Adiciona linha com as datas no eixo X
+        // Pega a última linha do gráfico para determinar a largura exata
+        const linhasGrafico = grafico.split('\n');
+        const ultimaLinha = linhasGrafico[linhasGrafico.length - 1] || '';
+        const larguraTotal = ultimaLinha.length;
+
+        // Encontra onde começa o gráfico (após o eixo Y)
+        const match = ultimaLinha.match(/^\s*R\$\s+\d+\s+/);
+        const offsetEsquerda = match ? match[0].length : 11;
+        const larguraGrafico = larguraTotal - offsetEsquerda;
+
+        // Posiciona 3 datas: início, meio, fim
         const totalDados = dados.length;
         const meio = Math.floor(totalDados / 2);
         const final = totalDados - 1;
 
-        // Calcula espaçamento baseado no tamanho do gráfico
-        // asciichart usa ~2 caracteres por ponto de dados
-        const larguraGrafico = totalDados * 2;
-        const espacoEsquerda = 11; // Alinha com formato de preço
-
-        // Posiciona as datas: início (0), meio, fim
         const dataInicio = dados[0].data.substring(0, 5);
         const dataMeio = dados[meio].data.substring(0, 5);
         const dataFim = dados[final].data.substring(0, 5);
 
-        // Cria linha de datas com posicionamento proporcional
-        let linhaData = ' '.repeat(espacoEsquerda);
-        linhaData += dataInicio;
-        linhaData += ' '.repeat(Math.floor(larguraGrafico / 2) - 5);
-        linhaData += dataMeio;
-        linhaData += ' '.repeat(Math.floor(larguraGrafico / 2) - 5);
-        linhaData += dataFim;
+        // Calcula posições proporcionais
+        const posInicio = 0;
+        const posMeio = Math.floor(larguraGrafico / 2) - 2; // -2 para centralizar
+        const posFim = larguraGrafico - 5; // -5 para o tamanho da data
+
+        // Constrói linha de datas
+        let linhaData = ' '.repeat(offsetEsquerda);
+        for (let i = 0; i < larguraGrafico; i++) {
+          if (i === posInicio) {
+            linhaData += dataInicio;
+            i += dataInicio.length - 1;
+          } else if (i === posMeio) {
+            linhaData += dataMeio;
+            i += dataMeio.length - 1;
+          } else if (i === posFim) {
+            linhaData += dataFim;
+            i += dataFim.length - 1;
+          } else {
+            linhaData += ' ';
+          }
+        }
 
         console.log(chalk.dim(linhaData));
       }
