@@ -6,6 +6,9 @@ coverage
 pnpm-lock.yaml
 CHANGELOG.md
 
+# Fixtures HTML (não formatar para preservar estrutura)
+tests/fixtures/*.html
+
 # Arquivos JavaScript gerados
 *.js
 !eslint.config.js
