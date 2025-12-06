@@ -8,9 +8,18 @@ importers:
 
   .:
     dependencies:
+      asciichart:
+        specifier: ^1.5.25
+        version: 1.5.25
+      chalk:
+        specifier: ^5.6.2
+        version: 5.6.2
       cheerio:
         specifier: ^1.1.2
         version: 1.1.2
+      cli-table3:
+        specifier: ^0.6.5
+        version: 0.6.5
     devDependencies:
       '@eslint/js':
         specifier: ^9.39.1
@@ -1043,6 +1052,9 @@ packages:
 
   array-ify@1.0.0:
     resolution: {integrity: sha512-c5AMf34bKdvPhQ7tBGhqkgKNUzMr4WUs+WDtC2ZUGOUncbxKMTvqxYctiseW3+L4bA8ec+GcZ6/A/FW4m8ukng==}
+
+  asciichart@1.5.25:
+    resolution: {integrity: sha512-PNxzXIPPOtWq8T7bgzBtk9cI2lgS4SJZthUHEiQ1aoIc3lNzGfUvIvo9LiAnq26TACo9t1/4qP6KTGAUbzX9Xg==}
 
   assertion-error@2.0.1:
     resolution: {integrity: sha512-Izi8RQcffqCeNVgFigKli1ssklIbpHnCYc6AknXGYoB6grJqyeby7jv12JUQgmTAnIDnbck1uxksT4dzN3PWBA==}
@@ -3767,6 +3779,8 @@ snapshots:
   array-flatten@1.1.1: {}
 
   array-ify@1.0.0: {}
+
+  asciichart@1.5.25: {}
 
   assertion-error@2.0.1: {}
 
