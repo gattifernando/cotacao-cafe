@@ -35,12 +35,13 @@ cotacao-cafe
 cotacao-cafe [opções]
 
 Opções:
-  -V, --version    Exibe versão do pacote
-  -j, --json       Exibe saída em formato JSON
-  -q, --quiet      Modo silencioso (apenas erros)
-  --no-colors      Desabilita cores no output
-  --no-charts      Desabilita gráficos ASCII
-  -h, --help       Exibe ajuda
+  -V, --version        Exibe versão do pacote
+  -j, --json           Exibe saída em formato JSON
+  -q, --quiet          Modo silencioso (apenas erros)
+  -l, --limit <numero> Limita quantidade de cotações na tabela (0 = todas, padrão: 10)
+  --no-colors          Desabilita cores no output
+  --no-charts          Desabilita gráficos ASCII
+  -h, --help           Exibe ajuda
 ```
 
 **Exemplos:**
@@ -48,6 +49,12 @@ Opções:
 ```bash
 # Saída JSON para integração com scripts
 cotacao-cafe --json | jq '.historicoMensal[0]'
+
+# Mostrar todas as cotações na tabela
+cotacao-cafe --limit 0
+
+# Mostrar últimas 20 cotações
+cotacao-cafe --limit 20
 
 # Sem gráficos (mais rápido)
 cotacao-cafe --no-charts
@@ -193,7 +200,20 @@ O projeto possui dois tipos de testes:
 - **Executam automaticamente todos os dias às 9h** via GitHub Actions
 - Criam uma issue automaticamente se detectarem falha
 
-## ⚠️ Limitações
+## ⚠️ Aviso Legal e Limitações
+
+**IMPORTANTE:** Este pacote é fornecido "como está", sem garantias de qualquer tipo.
+
+- ✋ **Não nos responsabilizamos** pela exatidão, completude ou uso das informações fornecidas
+- 📊 Os dados são extraídos de fontes públicas e podem conter **erros ou imprecisões**
+- ⏱️ O serviço está sujeito a **indisponibilidade** ou alterações na fonte de dados
+- 💼 **Não deve ser utilizado** como única fonte para decisões comerciais ou financeiras
+- 🔍 Sempre **valide as informações** através de fontes oficiais antes de tomar decisões
+- 🛡️ O autor e contribuidores **não se responsabilizam** por prejuízos resultantes do uso deste pacote
+
+Este é um projeto de código aberto para fins educacionais e informativos.
+
+## 🤝 Contribuindo
 
 Contribuições são bem-vindas! Veja [CONTRIBUTING.md](CONTRIBUTING.md) para detalhes.
 

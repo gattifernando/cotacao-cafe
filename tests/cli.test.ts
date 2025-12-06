@@ -89,14 +89,69 @@ describe('CLI', () => {
     // Deve ter pelo menos uma das duas: erro ou sucesso
     expect(hasError || hasSuccess).toBe(true);
   });
+
+  it('deve exibir disclaimer legal', async () => {
+    const output = await executeCli(cliPath);
+
+    expect(output).toContain('⚠️  AVISO LEGAL');
+    expect(output).toContain('Dados fornecidos "como está"');
+    expect(output).toContain('Não nos responsabilizamos');
+  });
+
+  it('deve respeitar opção --limit', async () => {
+    const output = await executeCli(cliPath, ['--limit', '5']);
+
+    expect(output).toContain('📋 Últimas Cotações');
+    expect(output).toContain('(Mostrando últimas 5 de');
+  });
+
+  it('deve mostrar todas as cotações com --limit 0', async () => {
+    const output = await executeCli(cliPath, ['--limit', '0']);
+
+    expect(output).toContain('📋 Todas as Cotações');
+    expect(output).toContain('(Total: 88 cotações)');
+  });
+
+  it('deve retornar JSON com --json', async () => {
+    const output = await executeCli(cliPath, ['--json']);
+
+    expect(() => JSON.parse(output)).not.toThrow();
+    const data = JSON.parse(output);
+    expect(data).toHaveProperty('cotacaoDoDia');
+    expect(data).toHaveProperty('historicoMensal');
+    expect(Array.isArray(data.historicoMensal)).toBe(true);
+  });
+
+  it('deve omitir gráficos com --no-charts', async () => {
+    const outputWithCharts = await executeCli(cliPath);
+    const outputWithoutCharts = await executeCli(cliPath, ['--no-charts']);
+
+    // Com gráficos deve ter mais conteúdo
+    expect(outputWithCharts.length).toBeGreaterThan(
+      outputWithoutCharts.length
+    );
+    // Sem gráficos não deve ter "Período:" e "Variação:"
+    expect(outputWithoutCharts).not.toContain('Período:');
+    expect(outputWithoutCharts).not.toContain('Variação:');
+  });
+
+  it('deve respeitar modo --quiet', async () => {
+    const output = await executeCli(cliPath, ['--quiet']);
+
+    // Em modo quiet, não deve ter cabeçalho nem emojis
+    expect(output).not.toContain('╔═══════════════════════════════════════════╗');
+    expect(output).not.toContain('📊');
+    expect(output).not.toContain('📈');
+    expect(output).not.toContain('📋');
+  });
 });
 
 /**
  * Função auxiliar para executar o CLI e capturar a saída
  */
-function executeCli(cliPath: string): Promise<string> {
+function executeCli(cliPath: string, args: string[] = []): Promise<string> {
   return new Promise((resolve, reject) => {
-    const child = spawn('tsx', [cliPath], {
+    const child = spawn('tsx', [cliPath, ...args], {
       cwd: join(__dirname, '..'),
       env: { ...process.env },
     });

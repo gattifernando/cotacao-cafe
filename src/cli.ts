@@ -31,8 +31,13 @@ program
   .version(packageJson.version)
   .option('-j, --json', 'Exibe saída em formato JSON')
   .option('-q, --quiet', 'Modo silencioso (apenas erros)')
+  .option('-l, --limit <numero>', 'Limita quantidade de cotações na tabela (0 = todas)', '10')
   .option('--no-colors', 'Desabilita cores no output')
   .option('--no-charts', 'Desabilita gráficos ASCII')
+  .addHelpText(
+    'after',
+    '\n⚠️  AVISO: Dados fornecidos "como está", sem garantias. Não nos responsabilizamos\n   por erros, indisponibilidade ou prejuízos. Valide informações antes de usar.'
+  )
   .parse(process.argv);
 
 const options = program.opts();
@@ -178,7 +183,9 @@ async function main() {
         currency: 'BRL',
       });
 
-      console.log(chalk.bold.yellow('\n📋 Últimas Cotações\n'));
+      const limit = parseInt(options.limit, 10);
+      const titulo = limit === 0 ? 'Todas as Cotações' : 'Últimas Cotações';
+      console.log(chalk.bold.yellow(`\n📋 ${titulo}\n`));
 
       const table = new Table({
         head: [
@@ -193,7 +200,7 @@ async function main() {
         },
       });
 
-      const ultimas = mensais.slice(-10);
+      const ultimas = limit === 0 ? mensais : mensais.slice(-limit);
       ultimas.forEach((c) => {
         table.push([
           chalk.yellow(c.tipo),
@@ -204,7 +211,28 @@ async function main() {
       });
 
       console.log(table.toString());
-      console.log(chalk.dim('\n  (Mostrando últimas 10 de 88 cotações)\n'));
+      if (limit > 0 && limit < mensais.length) {
+        console.log(
+          chalk.dim(`\n  (Mostrando últimas ${limit} de ${mensais.length} cotações)\n`)
+        );
+      } else {
+        console.log(
+          chalk.dim(`\n  (Total: ${mensais.length} cotações)\n`)
+        );
+      }
+    }
+
+    // Disclaimer legal
+    if (!options.quiet && !options.json) {
+      console.log(chalk.dim('\n' + '─'.repeat(60)));
+      console.log(
+        chalk.yellow.bold('\n⚠️  AVISO LEGAL') +
+          chalk.dim(
+            '\nDados fornecidos "como está", sem garantias de exatidão.\n' +
+              'Não nos responsabilizamos por erros ou prejuízos decorrentes do uso.\n' +
+              'Valide as informações em fontes oficiais antes de utilizá-las.\n'
+          )
+      );
     }
   } catch (erro) {
     if (options.json) {
