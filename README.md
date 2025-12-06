@@ -14,6 +14,8 @@ pnpm add cotacao-cafe
 
 ## 📖 Uso
 
+### Cotação do dia
+
 ```typescript
 import { buscarCotacaoCooabriel } from 'cotacao-cafe';
 
@@ -35,6 +37,19 @@ main();
 │    1    │'Conilon 7/8'│ '05/12/2025'│ '10:30'│ 1355  │
 │    2    │ 'Conilon 8' │ '05/12/2025'│ '10:30'│ 1350  │
 └─────────┴─────────────┴────────────┴───────┴────────┘
+```
+
+### Histórico mensal
+
+```typescript
+import { buscarHistoricoMensal } from 'cotacao-cafe';
+
+const cotacoes = await buscarHistoricoMensal();
+console.log(`Total: ${cotacoes.length} cotações`);
+
+// Filtrar por tipo
+const conilon7 = cotacoes.filter((c) => c.tipo === 'Conilon 7');
+console.table(conilon7.slice(-5)); // Últimas 5 cotações
 ```
 
 ### Formatando para exibição
@@ -76,8 +91,9 @@ type CotacaoCafe = {
 
 ## 🎯 Por que usar?
 
-- **Útil**: Cotação oficial da Cooabriel é referência para produtores de café Conilon no ES [web:3]
-- **Simples**: Uma única função async
+- **Útil**: Cotação oficial da Cooabriel é referência para produtores de café Conilon no ES
+- **Simples**: Funções async diretas
+- **Completo**: Cotação do dia + histórico mensal
 - **Tipado**: TypeScript com tipos claros
 - **Testado**: 100% de cobertura de testes
 - **Offline**: Testes usam fixture, não depende da internet
