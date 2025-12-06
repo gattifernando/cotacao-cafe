@@ -16,7 +16,7 @@ pnpm add cotacao-cafe
 
 ## 🖥️ CLI
 
-Execute direto no terminal após instalação global:
+Execute direto no terminal:
 
 ```bash
 npx cotacao-cafe
@@ -27,6 +27,33 @@ Ou instale globalmente:
 ```bash
 npm install -g cotacao-cafe
 cotacao-cafe
+```
+
+### Opções disponíveis
+
+```bash
+cotacao-cafe [opções]
+
+Opções:
+  -V, --version    Exibe versão do pacote
+  -j, --json       Exibe saída em formato JSON
+  -q, --quiet      Modo silencioso (apenas erros)
+  --no-colors      Desabilita cores no output
+  --no-charts      Desabilita gráficos ASCII
+  -h, --help       Exibe ajuda
+```
+
+**Exemplos:**
+
+```bash
+# Saída JSON para integração com scripts
+cotacao-cafe --json | jq '.historicoMensal[0]'
+
+# Sem gráficos (mais rápido)
+cotacao-cafe --no-charts
+
+# Versão do pacote
+cotacao-cafe --version
 ```
 
 ## 📖 Uso
