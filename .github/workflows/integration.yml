@@ -1,0 +1,123 @@
+name: Integration Tests
+
+on:
+  # Roda diariamente às 9h (horário de Brasília UTC-3 = 12h UTC)
+  schedule:
+    - cron: '0 12 * * *'
+
+  # Permite execução manual
+  workflow_dispatch:
+
+  # Roda em PRs que modificam código de scraping
+  pull_request:
+    paths:
+      - 'src/extrair-*.ts'
+      - 'src/obter-*.ts'
+      - 'tests/integration.test.ts'
+
+jobs:
+  integration:
+    name: Test Real Website
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.23.0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run integration tests
+        run: pnpm test:integration
+        continue-on-error: true
+        id: integration
+
+      - name: Create Issue if tests fail
+        if: failure() && github.event_name == 'schedule'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = '🚨 Testes de integração falharam - Site pode ter mudado';
+            const body = `
+            ## ⚠️ Alerta de Integração
+
+            Os testes de integração falharam na execução diária.
+
+            **Possíveis causas:**
+            - 📝 Estrutura HTML do site da Cooabriel mudou
+            - 🌐 Site está fora do ar
+            - 🔧 Mudança no formato dos dados
+
+            **Próximos passos:**
+            1. Execute localmente: \`pnpm test:integration\`
+            2. Acesse https://cooabriel.coop.br/cotacao-do-dia
+            3. Verifique se a estrutura mudou
+            4. Atualize os seletores se necessário
+
+            **Workflow:** ${context.workflow}
+            **Run:** ${context.runNumber}
+            **Link:** ${context.payload.repository.html_url}/actions/runs/${context.runId}
+            `;
+
+            // Verifica se já existe issue aberta
+            const issues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'integration-failure'
+            });
+
+            if (issues.data.length === 0) {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: title,
+                body: body,
+                labels: ['bug', 'integration-failure', 'automated']
+              });
+            } else {
+              // Adiciona comentário na issue existente
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issues.data[0].number,
+                body: `Teste falhou novamente em ${new Date().toISOString()}\n\n${body}`
+              });
+            }
+
+      - name: Comment on success after previous failure
+        if: success() && github.event_name == 'schedule'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // Fecha issues de falha se existirem
+            const issues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'integration-failure'
+            });
+
+            for (const issue of issues.data) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                body: '✅ Testes de integração voltaram a funcionar! Fechando automaticamente.'
+              });
+              
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                state: 'closed'
+              });
+            }
