@@ -35,4 +35,16 @@ describe('extrairCotacaoCooabriel', () => {
       'Não foi possível encontrar a tabela de cotação do café na página da Cooabriel'
     );
   });
+
+  it('deve permitir formatação do preço em reais', () => {
+    const cotacoes = extrairCotacaoCooabriel(htmlFixture);
+    const formatador = new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+    });
+
+    const precoFormatado = formatador.format(cotacoes[0].preco);
+    expect(precoFormatado).toMatch(/R\$\s*1\.360,00/);
+    expect(cotacoes[0].preco).toBe(1360.0);
+  });
 });
