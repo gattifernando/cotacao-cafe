@@ -174,47 +174,29 @@ async function main() {
 
         console.log(chalk.green(grafico));
 
-        // Adiciona linha com as datas no eixo X
-        // Pega a última linha do gráfico para determinar a largura exata
+        // Adiciona linha com as datas no eixo X (apenas início e fim)
         const linhasGrafico = grafico.split('\n');
         const ultimaLinha = linhasGrafico[linhasGrafico.length - 1] || '';
-        const larguraTotal = ultimaLinha.length;
 
         // Encontra onde começa o gráfico (após o eixo Y)
         const match = ultimaLinha.match(/^\s*R\$\s+\d+\s+/);
         const offsetEsquerda = match ? match[0].length : 11;
-        const larguraGrafico = larguraTotal - offsetEsquerda;
 
-        // Posiciona 3 datas: início, meio, fim
-        const totalDados = dados.length;
-        const meio = Math.floor(totalDados / 2);
-        const final = totalDados - 1;
+        // Encontra o último caractere não-espaço (fim real do gráfico)
+        const conteudoGrafico = ultimaLinha.substring(offsetEsquerda);
+        const ultimoCaractere = conteudoGrafico.trimEnd().length;
 
         const dataInicio = dados[0].data.substring(0, 5);
-        const dataMeio = dados[meio].data.substring(0, 5);
-        const dataFim = dados[final].data.substring(0, 5);
+        const dataFim = dados[dados.length - 1].data.substring(0, 5);
 
-        // Calcula posições proporcionais
-        const posInicio = 0;
-        const posMeio = Math.floor(larguraGrafico / 2) - 2; // -2 para centralizar
-        const posFim = larguraGrafico - 5; // -5 para o tamanho da data
-
-        // Constrói linha de datas
+        // Constrói linha: data início no começo, data fim no final real do gráfico
         let linhaData = ' '.repeat(offsetEsquerda);
-        for (let i = 0; i < larguraGrafico; i++) {
-          if (i === posInicio) {
-            linhaData += dataInicio;
-            i += dataInicio.length - 1;
-          } else if (i === posMeio) {
-            linhaData += dataMeio;
-            i += dataMeio.length - 1;
-          } else if (i === posFim) {
-            linhaData += dataFim;
-            i += dataFim.length - 1;
-          } else {
-            linhaData += ' ';
-          }
-        }
+        linhaData += dataInicio;
+
+        // Calcula espaço até a data final (alinhada com o fim do gráfico)
+        const espacoAteOFim = ultimoCaractere - dataInicio.length - dataFim.length;
+        linhaData += ' '.repeat(Math.max(0, espacoAteOFim));
+        linhaData += dataFim;
 
         console.log(chalk.dim(linhaData));
       }
