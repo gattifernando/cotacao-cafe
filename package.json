@@ -18,6 +18,7 @@
     "test": "vitest run --exclude tests/integration.test.ts",
     "test:integration": "vitest run tests/integration.test.ts",
     "test:all": "vitest run",
+    "test:package": "pnpm build && node scripts/test-package.js",
     "test:dev": "vitest watch --exclude tests/integration.test.ts",
     "test:build": "pnpm build && vitest",
     "typecheck": "tsc -p tsconfig.json --noEmit",

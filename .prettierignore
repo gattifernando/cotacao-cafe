@@ -9,6 +9,9 @@ CHANGELOG.md
 # Fixtures HTML (não formatar para preservar estrutura)
 tests/fixtures/*.html
 
+# Scripts Node (não formatar)
+scripts/**/*.js
+
 # Arquivos JavaScript gerados
 *.js
 !eslint.config.js
