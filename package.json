@@ -35,6 +35,14 @@
       "linkedin": "https://www.linkedin.com/in/gattifernando/"
     }
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gattifernando/cotacao-cafe.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gattifernando/cotacao-cafe/issues"
+  },
+  "homepage": "https://github.com/gattifernando/cotacao-cafe#readme",
   "release": {
     "branches": [
       "main"
