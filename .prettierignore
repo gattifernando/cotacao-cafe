@@ -1,0 +1,12 @@
+# Ignorar arquivos gerados e externos
+dist
+node_modules
+coverage
+.taskin.json
+pnpm-lock.yaml
+CHANGELOG.md
+
+# Arquivos JavaScript gerados
+*.js
+!eslint.config.js
+!vitest.config.ts
