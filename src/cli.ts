@@ -173,6 +173,31 @@ async function main() {
         });
 
         console.log(chalk.green(grafico));
+
+        // Adiciona linha com as datas no eixo X (início, meio, fim)
+        const totalDados = dados.length;
+        const meio = Math.floor(totalDados / 2);
+        const final = totalDados - 1;
+
+        // Calcula espaçamento baseado no tamanho do gráfico
+        // asciichart usa ~2 caracteres por ponto de dados
+        const larguraGrafico = totalDados * 2;
+        const espacoEsquerda = 11; // Alinha com formato de preço
+
+        // Posiciona as datas: início (0), meio, fim
+        const dataInicio = dados[0].data.substring(0, 5);
+        const dataMeio = dados[meio].data.substring(0, 5);
+        const dataFim = dados[final].data.substring(0, 5);
+
+        // Cria linha de datas com posicionamento proporcional
+        let linhaData = ' '.repeat(espacoEsquerda);
+        linhaData += dataInicio;
+        linhaData += ' '.repeat(Math.floor(larguraGrafico / 2) - 5);
+        linhaData += dataMeio;
+        linhaData += ' '.repeat(Math.floor(larguraGrafico / 2) - 5);
+        linhaData += dataFim;
+
+        console.log(chalk.dim(linhaData));
       }
     }
 
