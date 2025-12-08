@@ -1,0 +1,46 @@
+version: 2
+updates:
+  # Dependências npm
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+      day: 'monday'
+      time: '09:00'
+      timezone: 'America/Sao_Paulo'
+    open-pull-requests-limit: 1
+    labels:
+      - 'dependencies'
+      - 'automated'
+    commit-message:
+      prefix: 'fix(deps)'
+      include: 'scope'
+    # Agrupar TODAS as atualizações em um único PR
+    groups:
+      all-dependencies:
+        patterns:
+          - '*'
+        update-types:
+          - 'minor'
+          - 'patch'
+
+  # GitHub Actions
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+      day: 'monday'
+      time: '09:00'
+      timezone: 'America/Sao_Paulo'
+    open-pull-requests-limit: 1
+    labels:
+      - 'dependencies'
+      - 'github-actions'
+      - 'automated'
+    commit-message:
+      prefix: 'chore(ci)'
+      include: 'scope'
+    groups:
+      github-actions:
+        patterns:
+          - '*'
