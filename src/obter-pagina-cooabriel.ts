@@ -1,6 +1,6 @@
 const URL_COTACAO_COOABRIEL = 'https://cooabriel.coop.br/cotacao-do-dia';
 
-export async function obterHtmlCooabriel(): Promise<string> {
+export async function obterPaginaCooabriel(): Promise<string> {
   const resposta = await fetch(URL_COTACAO_COOABRIEL);
 
   if (!resposta.ok) {

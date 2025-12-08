@@ -1,31 +1,29 @@
-name: Release
+name: CI
+
 on:
+  pull_request:
+    branches: [main]
   push:
     branches: [main]
 
-permissions:
-  contents: write
-  pull-requests: write
-  id-token: write
-
 jobs:
-  release:
-    name: Release
+  test:
+    name: Test & Lint
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [22, 23, 24]
+
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      # PNPM PRIMEIRO
       - uses: pnpm/action-setup@v4
         with:
           version: 10.23.0
 
-      # DEPOIS Node.js
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: ${{ matrix.node-version }}
           cache: pnpm
 
       - name: Install dependencies
@@ -45,9 +43,3 @@ jobs:
 
       - name: Test package
         run: pnpm test:package
-
-      - name: Semantic Release
-        run: npx semantic-release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

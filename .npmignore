@@ -1,0 +1,29 @@
+# Source files
+src/
+tests/
+*.test.ts
+*.test.js
+
+# Config files
+tsconfig.json
+tsconfig.build.json
+eslint.config.js
+vitest.config.ts
+.prettierrc
+.prettierignore
+
+# Development
+.github/
+TASKS/
+node_modules/
+.taskin.json
+.tool-versions
+.nvmrc
+
+# Documentation
+CONTRIBUTING.md
+CHANGELOG.md
+
+# Git
+.git/
+.gitignore

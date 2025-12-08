@@ -1,7 +1,7 @@
 import * as cheerio from 'cheerio';
 import type { CotacaoCafe } from './index.js';
 
-export function extrairCotacaoCooabriel(html: string): CotacaoCafe[] {
+export function extrairCotacaoDoDia(html: string): CotacaoCafe[] {
   const $ = cheerio.load(html);
 
   // Buscar QUALQUER tabela com 4 colunas no thead
