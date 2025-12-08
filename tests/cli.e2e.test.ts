@@ -109,7 +109,8 @@ describe('CLI', () => {
     const output = await executeCli(cliPath, ['--limit', '0']);
 
     expect(output).toContain('📋 Todas as Cotações');
-    expect(output).toContain('(Total: 88 cotações)');
+    // O número de cotações pode variar conforme o site atualiza
+    expect(output).toMatch(/\(Total: \d+ cotações\)/);
   });
 
   it('deve retornar JSON com --json', async () => {
@@ -127,9 +128,7 @@ describe('CLI', () => {
     const outputWithoutCharts = await executeCli(cliPath, ['--no-charts']);
 
     // Com gráficos deve ter mais conteúdo
-    expect(outputWithCharts.length).toBeGreaterThan(
-      outputWithoutCharts.length
-    );
+    expect(outputWithCharts.length).toBeGreaterThan(outputWithoutCharts.length);
     // Sem gráficos não deve ter "Período:" e "Variação:"
     expect(outputWithoutCharts).not.toContain('Período:');
     expect(outputWithoutCharts).not.toContain('Variação:');
@@ -139,7 +138,9 @@ describe('CLI', () => {
     const output = await executeCli(cliPath, ['--quiet']);
 
     // Em modo quiet, não deve ter cabeçalho nem emojis
-    expect(output).not.toContain('╔═══════════════════════════════════════════╗');
+    expect(output).not.toContain(
+      '╔═══════════════════════════════════════════╗'
+    );
     expect(output).not.toContain('📊');
     expect(output).not.toContain('📈');
     expect(output).not.toContain('📋');

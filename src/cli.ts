@@ -31,7 +31,11 @@ program
   .version(packageJson.version)
   .option('-j, --json', 'Exibe saída em formato JSON')
   .option('-q, --quiet', 'Modo silencioso (apenas erros)')
-  .option('-l, --limit <numero>', 'Limita quantidade de cotações na tabela (0 = todas)', '10')
+  .option(
+    '-l, --limit <numero>',
+    'Limita quantidade de cotações na tabela (0 = todas)',
+    '10'
+  )
   .option('--no-colors', 'Desabilita cores no output')
   .option('--no-charts', 'Desabilita gráficos ASCII')
   .addHelpText(
@@ -194,7 +198,8 @@ async function main() {
         linhaData += dataInicio;
 
         // Calcula espaço até a data final (alinhada com o fim do gráfico)
-        const espacoAteOFim = ultimoCaractere - dataInicio.length - dataFim.length;
+        const espacoAteOFim =
+          ultimoCaractere - dataInicio.length - dataFim.length;
         linhaData += ' '.repeat(Math.max(0, espacoAteOFim));
         linhaData += dataFim;
 
@@ -239,12 +244,12 @@ async function main() {
       console.log(table.toString());
       if (limit > 0 && limit < mensais.length) {
         console.log(
-          chalk.dim(`\n  (Mostrando últimas ${limit} de ${mensais.length} cotações)\n`)
+          chalk.dim(
+            `\n  (Mostrando últimas ${limit} de ${mensais.length} cotações)\n`
+          )
         );
       } else {
-        console.log(
-          chalk.dim(`\n  (Total: ${mensais.length} cotações)\n`)
-        );
+        console.log(chalk.dim(`\n  (Total: ${mensais.length} cotações)\n`));
       }
     }
 
